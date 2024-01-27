@@ -98,23 +98,75 @@ bool test8()
     // interims should be 1,2,3,4,1, 1,2,3,4,1,2
     
     std::vector<std::vector<float>> res = VariationGenerator::getGrowInterpolations(start1, end1);
-    for (std::vector<float>& fs : res) printVec(fs);
+    // for (std::vector<float>& fs : res) printVec(fs);
     
     if (res.size() != 4) {printf("Res should be 4 but is %lu", res.size()); return false; }
 
     return true; 
 }
 
-// bool test5()
-// {
-//     // testing interpolation steps counting  
-//     std::vector<float> start1 = {1, 2, 3, 4};
-//     std::vector<float> end1 = {1,2,3,4};
-//    std::vector<std::vector<float>> res = VariationGenerator::getAllInterpolations(start1, end1, InterpolationMode::matchLengthThenSwap);
-//     // assert(("res should be zero ", res==0));
-//     if (res.size() != 0) {printf("Res should be zero but is %i", res.size()); return false; }
-//     return true; 
-// }
+bool test9()
+{
+    // testing interpolation steps counting  
+    std::vector<float> start1 = {1, 2, 3};
+    std::vector<float> end1 = {4,5,6};
+    // interims should be 4,2,3 4,5,3
+    
+    std::vector<std::vector<float>> res = VariationGenerator::getSwapInterpolations(start1, end1);
+    // for (std::vector<float>& fs : res) printVec(fs);
+    
+    if (res.size() != 2) {printf("Res should be 2 but is %lu", res.size()); return false; }
+
+    return true; 
+}
+
+bool test10()
+{
+    // testing interpolation steps counting  
+    std::vector<float> start1 = {1,2,3,4};
+    std::vector<float> end1 = {1,5,6,7};
+    // interims should be {1,5,3,4} {1,5,6,4}  
+    
+    std::vector<std::vector<float>> res = VariationGenerator::getSwapInterpolations(start1, end1);
+    for (std::vector<float>& fs : res) printVec(fs);
+    
+    if (res.size() != 2) {printf("Res should be 2 but is %lu", res.size()); return false; }
+    if (res[0][1] != 5) {printf("Res [0][1] should be 5 but is %f", res[0][4]); return false; }    
+    if (res[1][2] != 6) {printf("Res [1][2] should be 6 but is %f", res[1][5]); return false; }    
+    
+    return true; 
+}
+
+
+bool test11()
+{
+    // testing interpolation steps counting  
+    std::vector<float> start1 = {10,11,12,13};
+    std::vector<float> end1 = {1,5,6,7};
+    // interims should be {1,11,12,13} {1,5,12,13}, {1,5,6,13}  
+    
+    std::vector<std::vector<float>> res = VariationGenerator::getSwapInterpolations(start1, end1);
+    for (std::vector<float>& fs : res) printVec(fs);
+    
+    if (res.size() != 3) {printf("Res should be 3 but is %lu", res.size()); return false; }
+    if (res[0][0] != 1) {printf("Res [0][0] should be 1 but is %f", res[0][4]); return false; }    
+    if (res[1][1] != 5) {printf("Res [1][1] should be 5 but is %f", res[1][5]); return false; }    
+    if (res[2][2] != 6) {printf("Res [2][2] should be 6 but is %f", res[1][5]); return false; }    
+    
+    return true; 
+}
+
+
+bool test12()
+{
+    // testing interpolation steps counting  
+    std::vector<float> start1 = {1, 2, 3, 4};
+    std::vector<float> end1 = {1,2,3,4};
+    std::vector<std::vector<float>> res = VariationGenerator::getAllInterpolations(start1, end1, InterpolationMode::matchLengthThenSwap);
+    // assert(("res should be zero ", res==0));
+    if (res.size() != 0) {printf("Res should be zero but is %lu", res.size()); return false; }
+    return true; 
+}
 
 // bool test6()
 // {
@@ -178,4 +230,16 @@ int main()
          
     if (!test8()) printf("Test 8 failed\n");
     else printf("Test 8 passed\n");
+
+    if (!test9()) printf("Test 9 failed\n");
+    else printf("Test 9 passed\n");
+
+    if (!test10()) printf("Test 10 failed\n");
+    else printf("Test 10 passed\n");
+
+    if (!test11()) printf("Test 11 failed\n");
+    else printf("Test 11 passed\n");
+
+    if (!test12()) printf("Test 12 failed\n");
+    else printf("Test 12 passed\n");
 }

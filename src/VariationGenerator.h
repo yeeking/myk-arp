@@ -79,6 +79,15 @@ public:
   static std::vector<std::vector<float>> getGrowInterpolations(
        const std::vector<float> &start,
       const std::vector<float> &end);
+  
+  /** works out how to interpolate from start to end using swaps. 
+   * Assumes they are the same length. Only returns interim steps 
+   * {1,2,3} -> {4,5,6} -> {{1,2,3}, {4,2,3}, {4,5,3}, {4,5,6}} 
+   * so -> return {4,2,3}, {4,5,3}
+  */
+  static std::vector<std::vector<float>> getSwapInterpolations (
+       const std::vector<float> &start,
+      const std::vector<float> &end);
     
   // generate a variation of the sent input vector
   // mutlipliers: use these to specify mutipliers used to generate variations

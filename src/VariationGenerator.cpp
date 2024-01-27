@@ -88,6 +88,28 @@ std::vector<std::vector<float>> VariationGenerator::getGrowInterpolations(
 }
 
 
+std::vector<std::vector<float>> VariationGenerator::getSwapInterpolations (
+       const std::vector<float> &start,
+      const std::vector<float> &end)
+{
+    std::vector<std::vector<float>> inters;
+    if (start.size() != end.size()) return inters; // give up if not same size. could throw an exception here
+    // iterate over items in start and do pairwise comparison with end
+    // if a pair differs, swap start element for end element and add it to the inters
+    std::vector<float> inter{start.begin(), start.end()}; // start with start...
+    for (int i=0;i<start.size()-1; ++i){
+        if (inter[i] != end[i]){
+            inter[i] = end[i];// update inter 
+            // push back a copy of the updated version
+            inters.push_back(std::vector<float> (inter.begin(), inter.end()));
+        }
+    }
+
+    return inters; 
+}    
+
+
+
 
 
 
@@ -120,10 +142,15 @@ void PatternController::setPattern(unsigned short pattern)
 // generates a pattern based on the start and end pattern and the interpolation progress
 std::vector<float> PatternController::getCurrentPattern()
 {
+    std::vector<float> res; 
+    return res; 
 }
 // generates a pattern based on the start and end pattern, the interpolation progress
 // using this->getCurrentPattern and then applies a variation to it
 std::vector<float> PatternController::getCurrentPatternVariation()
 {
+    std::vector<float> res; 
+    return res; 
 }
+
 
